@@ -22,10 +22,10 @@ jobs:
           NEW_VERSION=$(echo "$CURRENT_VERSION" | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}')
           changes=$(git diff "v${CURRENT_VERSION}"..@)
           if [[ -n "$changes" ]]; then
-            echo "::set-output newTag=${NEW_VERSION}"
-            echo "::set-output releaseRequired=true"
+            echo "::set-output name=newTag::${NEW_VERSION}"
+            echo "::set-output name=releaseRequired::true"
           else
-            echo "::set-output releaseRequired=false"
+            echo "::set-output name=releaseRequired::false"
           fi
       
       - name: Create new tag & push
