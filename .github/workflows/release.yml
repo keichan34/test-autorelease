@@ -29,9 +29,9 @@ jobs:
           fi
       
       - name: Create new tag & push
-        if: ${{ steps.release-check.releaseRequired == 'true' }}
+        if: ${{ steps.release-check.outputs.releaseRequired == 'true' }}
         env:
-          NEW_VERSION: ${{ steps.release-check.newTag }}
+          NEW_VERSION: ${{ steps.release-check.outputs.newTag }}
         run: |
           jq '.version = "'${NEW_VERSION}'"' package.json > package.json.tmp && mv package.json.tmp package.json
           git add .
